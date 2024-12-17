@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 
+	"github.com/andrevberaldo/go_redis/usecase"
 	"github.com/joho/godotenv"
 )
 
@@ -13,5 +14,22 @@ func init() {
 }
 
 func main() {
-	fmt.Printf("Hello ::GO with Redis")
+	getUserPostsUseCase := usecase.NewGetUserPostsUseCase(2)
+
+	userPosts, err := getUserPostsUseCase.Execute()
+
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	//  index, post
+	for _, post := range userPosts {
+		json, err := post.ToJSON()
+
+		if err != nil {
+			fmt.Println("Unable to parse []byte to JSON")
+		}
+
+		fmt.Println(string(json))
+	}
 }
