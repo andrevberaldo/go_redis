@@ -9,12 +9,13 @@ import (
 
 func init() {
 	if err := godotenv.Load(); err != nil {
-		fmt.Printf("Unable to load environments variables")
+		fmt.Printf("Unable to load environments variables\n")
 	}
 }
 
 func main() {
-	getUserPostsUseCase := usecase.NewGetUserPostsUseCase(2)
+	userId := 2
+	getUserPostsUseCase := usecase.NewGetUserPostsUseCase(userId)
 
 	userPosts, err := getUserPostsUseCase.Execute()
 
@@ -23,13 +24,14 @@ func main() {
 	}
 
 	//  index, post
+	fmt.Printf("Posts Length %d\n", len(userPosts))
 	for _, post := range userPosts {
-		json, err := post.ToJSON()
+		parsedPost, err := post.ToJSON()
 
 		if err != nil {
 			fmt.Println("Unable to parse []byte to JSON")
 		}
 
-		fmt.Println(string(json))
+		fmt.Println(string(parsedPost))
 	}
 }

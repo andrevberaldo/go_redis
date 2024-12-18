@@ -6,8 +6,8 @@ import (
 )
 
 type Post struct {
-	UserID uint32 `json:"userId"`
-	ID     uint32 `json:"id"`
+	UserID int    `json:"userId"`
+	ID     int    `json:"id"`
 	Title  string `json:"title"`
 	Body   string `json:"body"`
 }
